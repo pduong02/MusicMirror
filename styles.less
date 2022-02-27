@@ -1,0 +1,30 @@
+// Less Styles for personal website 
+
+
+// Variables
+@standard-padding:  25px      ; 
+@pill-color: goldenrod;
+
+// Usage
+.nav-pills > li > a.active {
+    background-color: @pill-color;
+}
+
+
+.padded {
+    padding-top: @standard-padding;
+    padding-bottom: @standard-padding; 
+  }
+
+body {
+    .padded();
+}
+
+small{
+    .copyright {
+        float: left;
+        color: @pill-color; 
+        .padded();
+    }
+}
+
