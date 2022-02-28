@@ -15,10 +15,10 @@
          <meta name="description" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror.">
          <meta name="keywords" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror, which is an active music library that generates curated production-based recommendations for users. ">     
 
-
+    </head>
 
      <body>
-
+      
 <!-- navbar with page title -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -38,28 +38,84 @@
 </nav>
           
           <!-- MusicMirror main login hero/welcome screen  -->
-        <section class = "container-fluid col-12" style = "height: auto">
-          <div class="bg-dark text-secondary px-4 py-5 text-center">
-            <div class="py-5">
-              <h1 class="display-5 fw-bold text-white">Dark mode hero</h1>
-              <div class="col-lg-6 mx-auto">
-                <p class="fs-5 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                  <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Custom button</button>
-                  <button type="button" class="btn btn-outline-light btn-lg px-4">Secondary</button>
-                </div>
-              </div>
+<section class = "container-fluid col-12" >
+  <div class="bg-dark text-secondary px-4 py-3 text-center">
+      <div class="py-3">
+        <h1 class="display-5 fw-bold text-white">Welcome Back, <p class = "gradient-text" style = "font-style: italic;">Username.</p></h1>
+            <div class="col-lg-6 mx-auto">
+              <p class="fs-5 mb-4" style = "color: grey">Based on your recent adds, we've curated these three songs as your daily recommendations:</p>
+    
             </div>
           </div>
-          </section>
+  </div>
+</section>
 
+<!-- Song recommendations as thumbnails with supporting text -->
+<div class="album py-5 bg-light">
+  <div class="container">
 
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+<!-- ---------------------------------------------------------- -->
+      <div class="col">
+        <div class="card shadow-sm">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+          <div class="card-body mx-auto">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>   
+              <small class="text-muted">9 mins</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col ">
+        <div class="card shadow-sm ">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+          <div class="card-body">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+              <small class="text-muted">9 mins</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+          <div class="card-body">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+              <small class="text-muted">9 mins</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ----------------------------------------------------------- -->
+    </div>
+  </div>
+</div>
 
      <footer class = "primary-footer row">
-         <small class = "copyright">Copyright of Patrick Duong</small>
+         <small class = "copyright">Copyright of Patrick Duong and Max Kouzel.</small>
      </footer>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-     <script src="Less_Files/less.js-master/" ></script>
+     <script src="less.js-master/" ></script>
 
     </body>
  </html>
