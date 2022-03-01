@@ -21,50 +21,54 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" style = "font-weight: bolder">MusicMirror</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#" style="font-weight: bolder">MusicMirror</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
-                <div style = "float:right;" id="navbarText">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link active">Library</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Reflections</a></li>
-                    </ul>
+        
+                <div class="collapse navbar-collapse me-auto" id="navbarsExample05" style="float:right;">
+                    <div class="ms-auto">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link active">Library</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link">Reflections</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </nav>
+          </nav>
 
         <div class="jumbotron row">
             <div class="container col-8">
-              <h1 class="display-3">Your Library<h1>
+              <h1 class="gradient-text display-3" style="line-height: 1.3">Your Library</h1>
               <p>Welcome to your unique music playlist, curated just for you.</p>
             </div>
-            <div class="container col">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Add a song</button>
+        </div>
 
-                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasTopLabel">Search for a song</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="form-songtitle">Title</label>
-                                <input type="text" class="form-control" id="form-songtitle" placeholder="Enter song title">
-                            </div>
-                            <div class="form-group">
-                                <label for="form-artist">Artist</label>
-                                <input type="text" class="form-control" id="form-artist" placeholder="Enter artist">
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="search-submit">Search</button>
-                        </form>
-                    </div>
-                </div>  
-            </div>
+        <div class="container" id="addSongContainer">
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Add a song</button>
+
+            <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasTopLabel">Search for a song</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="form-songtitle">Title</label>
+                            <input type="text" class="form-control" id="form-songtitle" placeholder="Enter song title">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-artist">Artist</label>
+                            <input type="text" class="form-control" id="form-artist" placeholder="Enter artist">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="search-submit">Search</button>
+                    </form>
+                </div>
+            </div>  
         </div>
 
         <div class="container-xl">
