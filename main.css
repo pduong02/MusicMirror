@@ -1,37 +1,6 @@
-
-
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
 body {
 	line-height: 1;
+    padding-top: 60px;
 }
 ol, ul {
 	list-style: none;
@@ -64,6 +33,15 @@ footer.primary-footer{
     
 }
 
+.album {
+    object-fit: scale-down;    
+}
+
+.track {
+    background-color: lightgray;
+    border: solid 1px darkgray;
+}
+
 /* Make sure that the padding and border are included
  in the total width and height of the elements by adding the following CSS rule:
  Column width: 8.33%
@@ -71,13 +49,19 @@ footer.primary-footer{
 * {
     box-sizing: border-box;
     column-width: 8.33%
-   }  
-
-  /* For mobile phones: */
-  [class*="col-"] {
-    width: 100%;
-    float: left; 
 }  
+
+.form-group {
+    padding: 5px;
+}
+
+.form-control {
+    margin-top: 5px;
+}
+
+#search-submit {
+    margin-top: 5px;
+}
 
 @media only screen and (max-width: 768px) {
     /* For mobile phones and tablets: */
@@ -115,7 +99,15 @@ footer.primary-footer{
 header h1 {
     font-size:3em;
     font-weight: bold;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.row img {
+    height: 60px;
+    width: 60px;
+}
+
+.track {
+    padding: 5px;
 }
 
 h2{
