@@ -71,62 +71,60 @@ footer.primary-footer{
 * {
     box-sizing: border-box;
     column-width: 8.33%
-   }  
+}  
 
   /* For mobile phones: */
-  [class*="col-"] {
+[class*="col-"] {
     width: 100%;
     float: left; 
 }  
 
 @media only screen and (max-width: 768px) {
-    /* For mobile phones and tablets: */
-    [class*="col-"] {
-        width: 100%;
-    }
+  /* For mobile phones and tablets: */
+  [class*="col-"] {
+      width: 100%;
+  }
 } 
 
 
 @media only screen and (min-width: 768px) {
-    .row {
-        width: 100%;
-    }
+  .row {
+      width: 100%;
+  }
 
-    .col-12 {
-        width: 100%;
-    }
+  .col-12 {
+      width: 100%;
+  }
 
-    .col-8 {
-        width: 66.66%;
-    }
+  .col-8 {
+      width: 66.66%;
+  }
 
-    .col-4 {
-        width: 33.33%;
-    }
+  .col-4 {
+      width: 33.33%;
+  }
 } 
 
 @media only screen and (max-width: 600px) {
-    #fadeshow {
-        display: none;
-    }
+  #fadeshow {
+      display: none;
+  }
 } 
 
 
 header h1 {
-    font-size:3em;
-    font-weight: bold;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size:3em;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 h2{
-    font-size:1em;
-    font-weight: bold;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size:1em;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-body {
-    padding-top: 60px;
-  }
+
   @media (max-width: 979px) {
     body {
       padding-top: 0px;
@@ -183,33 +181,41 @@ font-weight: bold;
     -webkit-text-fill-color: transparent; 
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
-  }
+}
   
   
   
-  header {
-    margin-top: 1em;
-    margin-top: calc(50vh - 3em);
-  }
-  
-  h1 {
-    font-weight: normal;
-    font-size: 6em;
-    text-align: center;
-    margin-bottom: 0;
-    margin-bottom: 0.25em;
-  }
+header {
+  margin-top: 1em;
+  margin-top: calc(50vh - 3em);
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 6em;
+  text-align: center;
+  margin-bottom: 0;
+  margin-bottom: 0.25em;
+}
 
 
-  h5.song-title{
-    font-weight: bolder;
-    font-size: 2em;
-    text-align: left;
-  }
+h5.song-title{
+  font-weight: bolder;
+  font-size: 2em;
+  text-align: left;
+}
 
-  
-  h5.song-title{
-    font-weight: bolder;
-    font-size: 2em;
-    text-align: left;
-  }
+
+h5.song-title{
+  font-weight: bolder;
+  font-size: 2em;
+  text-align: left;
+}
+
+nav,.card {
+  font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.card h5 {
+  font-family: 'Times New Roman', Times, serif;
+}
