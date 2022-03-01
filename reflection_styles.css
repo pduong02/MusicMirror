@@ -1,0 +1,30 @@
+#my-chart .bar {
+  height: 300px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  #my-chart .bar {
+    height: 400px;
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1000px) {
+  #my-chart .bar {
+    height: 500px;
+    max-width: 1000px;
+  }
+}
+
+#motion-effect tr {
+    transition-duration: 0.3s;
+  }
+  #motion-effect tr:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  #motion-effect tr:hover th {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+  }
