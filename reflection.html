@@ -8,7 +8,6 @@
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
       <link rel="stylesheet" href="home_styles.css">
       <link rel="stylesheet" href="reflection_styles.css">
-      <link rel="stylesheet" href="reflection_styles.css">
 
       <link rel="stylesheet/less" type="text/css" href="styles.less" />
          <meta charset="utf-8">
@@ -41,49 +40,54 @@
     </div>
   </nav>
 
+  <!-- first section with a paragraph element and the pie chart next to it  -->
+<section class = "container-fluid col-12">
+    <p>
+        Welcome to your <strong>Reflection</strong>, Username.
+    </p>
+<!-- chart canvas instantiation (from Chart.js) -->
+    <div class = "chart-container" style = "float: right">
+        <canvas id="myChart"></canvas>
+    </div>
+
+</section>
 
 
-<!-- chart canvas (from Chart.js) -->
-  <div>
-    <canvas id="myChart"></canvas>
-  </div>
+  <!-- chart cdn  -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Chart javascript -->
-<script>
-    const labels = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-    ];
-  
-    const data = {
-      labels: labels,
-      datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-      }]
-    };
-  
+  <section class = "container">
+    <script style = "height: 200px">
+        // set up the chart
+        const data = {
+        labels: [
+          'Red',
+          'Blue',
+          'Yellow'
+        ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [300, 50, 100],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+    
+      //render the data 
     const config = {
-      type: 'line',
-      data: data,
-      options: {}
-    };
-  </script>
-   
-<!-- Chart rendering using config:  -->
-<script>
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
-  </script>
-  
+        type: 'doughnut',
+        data: data,
+      };
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+    </script>
+  </section>
 
 
  <footer class = "primary-footer row">
@@ -91,7 +95,6 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="less.js-master/" ></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     </body>
