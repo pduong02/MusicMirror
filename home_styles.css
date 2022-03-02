@@ -206,12 +206,6 @@ h5.song-title{
 }
 
 
-h5.song-title{
-  font-weight: bolder;
-  font-size: 2em;
-  text-align: left;
-}
-
 nav,.card {
   font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
