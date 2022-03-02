@@ -1,4 +1,16 @@
 .chart-container{
     height: auto;
-    width: 33%;
 }
+
+#reflection-intro{
+    font-size: 4vw; 
+}
+
+body {
+    padding-top: 60px;
+  }
+  @media (max-width: 979px) {
+    body {
+      padding-top: 0px;
+    }
+  }

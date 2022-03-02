@@ -41,33 +41,50 @@
   </nav>
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
-<section class = "container-fluid col-12">
-    <p>
-        Welcome to your <strong>Reflection</strong>, Username.
+<div class = "col-10 p-5">
+    <p id = "reflection-intro">
+        This is your <strong>Reflection</strong>, Username.
     </p>
+    <p style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px">
+        We've created this tool to give you a closer look at your musical personality and find the insights that you've been looking for. 
+        As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers. 
+    </p>
+</div>
+
+<!-- beginning of the graphs  -->
+<section class = "container-fluid col-12 row-cols-3">
 <!-- chart canvas instantiation (from Chart.js) -->
-    <div class = "chart-container" style = "float: right">
-        <canvas id="myChart"></canvas>
+    <div class = "chart-container col-4">
+        <canvas id="donut" aria-label="Donut graph of genres" role="canvas"></canvas>
+    </div>
+    <div class = "chart-container col-4">
+        <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
     </div>
 
+    <div class = "chart-container col-4" >
+        <canvas id="polar" aria-label="Radar graph of genres" role="canvas"></canvas>
+    </div>
+    
 </section>
 
 
   <!-- chart cdn  -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <section class = "container">
+  
+<!-- donut graph of musical activities -->
+<section class = "container">
     <script style = "height: 200px">
         // set up the chart
-        const data = {
+        const donut_data = {
         labels: [
-          'Red',
-          'Blue',
-          'Yellow'
+          'Hip-Hop/Rap',
+          'Indie',
+          'Pop'
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [300, 50, 100],
+          data: [4, 12, 23],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -78,16 +95,120 @@
       };
     
       //render the data 
-    const config = {
+    const donut_config = {
         type: 'doughnut',
-        data: data,
+        data: donut_data,
       };
-        const myChart = new Chart(
-          document.getElementById('myChart'),
-          config
-        );
+
     </script>
   </section>
+
+  <!-- rendering for donut chart -->
+  <script>      
+    const donut = new Chart(
+    document.getElementById('donut'),
+    donut_config
+  );</script>
+
+<!-- polar area chart of musical activity -->
+<section class = "container">
+    <script>
+        const data = {
+        labels: [
+          'Red',
+          'Green',
+          'Yellow',
+          'Grey',
+          'Blue'
+        ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [11, 16, 7, 3, 14],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(75, 192, 192)',
+            'rgb(255, 205, 86)',
+            'rgb(201, 203, 207)',
+            'rgb(54, 162, 235)'
+          ]
+        }]
+      };
+
+const polar_config = {
+  type: 'polarArea',
+  data: data,
+  options: {}
+};
+    </script>
+</section>
+
+  <!-- rendering for Polar chart -->
+  <script>
+    const polar = new Chart(
+      document.getElementById('polar'),
+      polar_config
+    );</script>
+
+
+<!-- radar graph of genre breakdown -->
+<section class = "container">
+    <script style = "height: 200px">
+        // set up the chart
+        const radar_data = {
+  labels: [
+    '12AM',
+    '3AM',
+    '6AM',
+    '9AM',
+    '12PM',
+    '3PM',
+    '6PM',
+    '9PM',
+  ],
+  datasets: [{
+    label: 'Folk Music',
+    data: [65, 59, 90, 81, 56, 55, 40, 35],
+    fill: true,
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgb(255, 99, 132)',
+    pointBackgroundColor: 'rgb(255, 99, 132)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(255, 99, 132)'
+  }, {
+    label: 'Indie',
+    data: [28, 48, 40, 19, 96, 27, 100, 20],
+    fill: true,
+    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    borderColor: 'rgb(54, 162, 235)',
+    pointBackgroundColor: 'rgb(54, 162, 235)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(54, 162, 235)'
+  }]
+};
+    
+const radar_config = {
+  type: 'radar',
+  data: radar_data,
+  options: {
+    elements: {
+      line: {
+        borderWidth: 3
+      }
+    }
+  },
+};
+
+    </script>
+  </section>
+
+  <!-- rendering for Radar chart -->
+  <script>
+  const radar = new Chart(
+    document.getElementById('radar'),
+    radar_config
+  );</script>
 
 
  <footer class = "primary-footer row">
