@@ -1,0 +1,16 @@
+.chart-container{
+    height: auto;
+}
+
+#reflection-intro{
+    font-size: 4vw; 
+}
+
+body {
+    padding-top: 60px;
+  }
+  @media (max-width: 979px) {
+    body {
+      padding-top: 0px;
+    }
+  }
