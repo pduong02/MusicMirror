@@ -6,10 +6,10 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
-      <link rel="stylesheet" href="home_styles.css">
-      <link rel="stylesheet" href="reflection_styles.css">
+      <link rel="stylesheet" href="../styles/home_styles.css">
+      <link rel="stylesheet" href="../styles/reflection_styles.css">
 
-      <link rel="stylesheet/less" type="text/css" href="styles.less" />
+      <link rel="stylesheet/less" type="text/css" href="../styles.less" />
          <meta charset="utf-8">
          <meta http-equiv="X-UA-Compatible" content="IE=edge">
          <meta name="viewport" content="width=device-width, initial-scale=1"> 
@@ -26,7 +26,7 @@
   <!--- Navigation between sites -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html" style="font-weight: bolder">MusicMirror.</a>
+        <a class="navbar-brand" href="home.php" style="font-weight: bolder">MusicMirror.</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,9 +34,9 @@
         <div class="collapse navbar-collapse me-auto" id="navbarsExample05" style="float:right;">
             <div class="ms-auto">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="library.html" class="nav-link">Library</a></li>
-                    <li class="nav-item"><a href="reflection.html" class="nav-link active">Reflection</a></li>
+                    <li class="nav-item"><a href="home.php" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="library.php" class="nav-link">Library</a></li>
+                    <li class="nav-item"><a href="reflection.php" class="nav-link active">Reflection</a></li>
                 </ul>
             </div>
         </div>
