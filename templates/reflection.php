@@ -14,7 +14,7 @@
          <meta http-equiv="X-UA-Compatible" content="IE=edge">
          <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-         <meta name="author" content="Patrick Duong">
+         <meta name="author" content="Patrick Duong and Max Kouzel">
          <meta name="description" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror.">
          <meta name="keywords" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror, which is an active music library that generates curated production-based recommendations for users. ">     
 
@@ -23,8 +23,8 @@
      <body>
       
 <!-- navbar with page title -->
-  <!--- Navigation between sites -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="home.php" style="font-weight: bolder">MusicMirror.</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-</nav>
+  </nav>
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
 <div class = "col-10 p-5">
@@ -58,14 +58,14 @@
 <section class = "container-fluid col-12 row-cols-3">
 <!-- chart canvas instantiation (from Chart.js) -->
     <div class = "chart-container col-4">
-        <canvas id="donut" aria-label="Donut graph of genres" role="canvas"></canvas>
+        <canvas id="donut" aria-label="Donut graph of genres" role="img"></canvas>
     </div>
     <div class = "chart-container col-4">
-        <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
+        <canvas id="radar" aria-label="Radar graph of genres" role="img"></canvas>
     </div>
 
     <div class = "chart-container col-4" >
-        <canvas id="polar" aria-label="Radar graph of genres" role="canvas"></canvas>
+        <canvas id="polar" aria-label="Radar graph of genres" role="img"></canvas>
     </div>
     
 </section>
@@ -217,7 +217,6 @@ const radar_config = {
  <footer class = "primary-footer row">
      <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
 </footer>
-<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="less.js-master/" ></script>
 
