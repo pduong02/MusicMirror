@@ -5,4 +5,11 @@ spl_autoload_register(function($classname) {
     include "classes/$classname.php";
 });
 
-header("Location: templates/home.php", true, 303);
+session_start();
+
+$action = "login";
+if (isset($_GET["action"]))
+    $action = $_GET["action"];
+
+$controller = new MMController($action);
+$controller->run();

@@ -14,6 +14,9 @@ class MMController {
             case "library":
                 $this->showLibrary();
                 break;
+            case "addsong":
+                $this->addSong();
+                break;
             case "reflection":
                 $this->getReflection();
                 break;
@@ -30,19 +33,102 @@ class MMController {
         }
     }
 
+    public function login() {
+        if (isset($_POST["email"]) && !empty($_POST["email"]) && !empty($_POST["name"])) {
+            $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
+            if ($data === false) {
+                $error_msg = "Error checking for user";
+            } else if (!empty($data)) {
+                // returning user
+                if (password_verify($_POST["password"], $data[0]["password"])) {
+                    $_SESSION["name"] = $data[0]["name"];
+                    $_SESSION["email"] = $data[0]["email"];
+                    $_SESSION['userid'] = $data[0]["userid"];
+                    header("Location: ?action=library");
+                } else {
+                    $error_msg = "Wrong password";
+                }
+            } else {
+                // new user
+                $insert = $this->db->query("insert into users (name, email, password) values (?, ?, ?);", 
+                                                                "sss", $_POST["name"], $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+                if ($insert === false) {
+                    $error_msg = "Error inserting user";
+                } else {
+                    $_SESSION["name"] = $_POST["name"];
+                    $_SESSION["email"] = $_POST["email"];
+                    $_SESSION['userid'] = $data[0]["userid"];
+                    header("Location: ?action=library");
+                }
+            }
+        }
+
+        include("templates/login.php");
+    }
+    
+
     public function showLibrary() {
         $user = [
             "name" => $_SESSION["name"],
-            "email" => $_SESSION["email"]
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION["userid"]
         ];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $hits = $this->searchGenius($_POST["form-songtitle"], $_POST["form-artist"]);
+            
+            if ($hits === false) {
+                $error_msg = "Failed to make genius request.";
+            }
+            
+            $_SESSION["hits"] = $hits['response']['hits'];
+            $_SESSION["title"] = $_POST["form-songtitle"];
+            $_SESSION["artist"] = $_POST["form-artist"];
 
+            header("Location: ?action=addsong", true, 303);
         } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $songs = $this->db->query("select")
+            $songs = $this->db->query("select * from songs where userid = ?", "i", $user['id']);
+
+            if ($songs===false) {
+                $error_msg = "Failed to select songs from database";
+            }
         }
 
         include('templates/library.php');
+    }
+
+    public function addSong() {
+        $user = [
+            "name" => $_SESSION["name"],
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION['userid']
+        ];
+
+        if (!isset($_SESSION["hits"])) {
+            $error_msg = "Hits not stored properly.";
+            header("Location: ?action=library");
+        } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $hits = $_SESSION["hits"];
+            $title = $_SESSION["title"];
+            $artist = $_SESSION["artist"];
+
+            include("templates/addsong.php");
+        } else { // POST request
+            if (isset($_POST['songinfo'])) {
+                $songinfo = json_decode($_POST['songinfo'], true);
+                $res = $this->db->query("insert into songs (userid, title, primary_artist, geniusid, image_url) values (?, ?, ?, ?, ?)", "issis", $user['id'], 
+                                        $songinfo['title'], $songinfo['artist'], $songinfo['songid'], $songinfo['image_url']);
+                if ($res === false) {
+                    $error_msg = "Failed to insert into songs table";
+                }
+
+                header("Location: ?action=library");
+                
+            } else {
+                $error_msg = "Did not successfully encode song info";
+                echo $error_msg;
+            }
+        }
     }
 
     private function searchGenius($title, $artist) {
