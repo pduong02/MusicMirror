@@ -57,7 +57,7 @@ class MMController {
                 } else {
                     $_SESSION["name"] = $_POST["name"];
                     $_SESSION["email"] = $_POST["email"];
-                    $_SESSION['userid'] = $data[0]["userid"];
+                    $_SESSION['userid'] = $insert[0]["userid"];
                     header("Location: ?action=library");
                 }
             }
@@ -141,6 +141,60 @@ class MMController {
         curl_setopt($curl, CURLOPT_URL, $genius_search_url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        return json_decode($resp, true);
+    }
+
+    public function home() {
+        $user = [
+            "name" => $_SESSION["name"],
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION['userid']
+        ];
+
+        // generate recommendations
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // user asked to add song to library, add song then redirect back to home
+            $songinfo = json_decode($_POST['songinfo'], true);
+            $res = $this->db->query("insert into songs (userid, title, primary_artist, geniusid, image_url) values (?, ?, ?, ?, ?)", "issis", $user['id'], 
+                                    $songinfo['title'], $songinfo['artist'], $songinfo['songid'], $songinfo['image_url']);
+            if ($res === false) {
+                $error_msg = "Failed to insert into songs table";
+            }
+
+            header("Location: ?action=home", true, 303);
+        } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            // should be an array with 3 elements, containing title, artist, image, and genres
+            $recommedations = $this->getRecommendations($user);
+
+        }
+
+        include("templates/home.php");
+    }
+
+    private function getRecommendations($user) {
+        // generate recommendations based on producer, genres, etc.
+
+    }
+
+    function getGeniusSong($songid) {
+        $client_access_token = Config::$access_token;
+        $genius_search_url = "http://api.genius.com/songs/{$songid}";
+    
+        echo $genius_search_url;
+    
+        $curl = curl_init($genius_search_url);
+        curl_setopt($curl, CURLOPT_URL, $genius_search_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    
+        $headers = array(
+            "Authorization: Bearer ".Config::$access_token,
+        );
+    
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         
         $resp = curl_exec($curl);
         curl_close($curl);
