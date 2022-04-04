@@ -1,4 +1,5 @@
 <?php
+//some edits
 // sources: https://www.php.net/manual/en/, https://cs4640.cs.virginia.edu/, https://genius.com/api-clients
 
 spl_autoload_register(function($classname) {
