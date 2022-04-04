@@ -33,6 +33,12 @@ class MMController {
         }
     }
 
+    private function destroySession() {
+        session_unset();
+        session_destroy();
+        session_start();
+    }
+
     public function login() {
         if (isset($_POST["email"]) && !empty($_POST["email"]) && !empty($_POST["name"])) {
             $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
@@ -44,7 +50,7 @@ class MMController {
                     $_SESSION["name"] = $data[0]["name"];
                     $_SESSION["email"] = $data[0]["email"];
                     $_SESSION['userid'] = $data[0]["userid"];
-                    header("Location: ?action=library");
+                    header("Location: ?action=home");
                 } else {
                     $error_msg = "Wrong password";
                 }
@@ -52,15 +58,14 @@ class MMController {
                 // new user
                 $insert = $this->db->query("insert into users (name, email, password) values (?, ?, ?);", 
                                                                 "sss", $_POST["name"], $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT));
-                $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
 
                 if ($insert === false) {
                     $error_msg = "Error inserting user";
                 } else {
                     $_SESSION["name"] = $_POST["name"];
                     $_SESSION["email"] = $_POST["email"];
-                    $_SESSION['userid'] = $data[0]["userid"];
-                    header("Location: ?action=library");
+                    $_SESSION['userid'] = $insert[0]["userid"];
+                    header("Location: ?action=home");
                 }
             }
         }
@@ -151,9 +156,21 @@ class MMController {
         return json_decode($resp, true);
     }
 
+    //return artists ranked by # of appearances: 
+    public function artistRanking(){
+        $songs = $this->db->query("select primary_artist, count(*) as artists FROM songs GROUP BY primary_artist" );
+        echo print_r($songs);
+        
+
+        
+    }
+
+
    public function getReflection() {
     $data_val = 30;
     $js_out_dval = json_encode($data_val);
+
+    $this->artistRanking();
 
     include('templates/reflection.php');
    }

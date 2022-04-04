@@ -34,6 +34,7 @@
                             <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
                             <li class="nav-item"><a href="?action=library" class="nav-link active">Library</a></li>
                             <li class="nav-item"><a href="?action=reflection" class="nav-link">Reflection</a></li>
+                            <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
                         </ul>
                     </div>
                 </div>

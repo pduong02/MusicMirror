@@ -37,6 +37,7 @@
                   <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
                   <li class="nav-item"><a href="?action=library" class="nav-link ">Library</a></li>
                   <li class="nav-item"><a href="?action=reflection" class="nav-link active">Reflection</a></li>
+                  <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -45,14 +46,18 @@
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
 <div class = "col-10 p-5">
-    <p id = "reflection-intro">
-        This is your <strong>Reflection</strong>, Username.
-    </p>
+    <h1 id = "reflection-intro">
+        This is your <strong>Reflection</strong>, <?=$_SESSION["name"]?>.</strong>
+  </h1>
     <p style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px">
         We've created this tool to give you a closer look at your musical personality and find the insights that you've been looking for. 
         As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers. 
     </p>
 </div>
+
+<!-- next section with more advanced insights:  -->
+
+
 
 <!-- beginning of the graphs  -->
 <section class = "container-fluid col-12 row-cols-3">
@@ -80,7 +85,7 @@
     <script style = "height: 200px">
         //initialize data vals: 
         var test_val = <?php echo $js_out_dval; ?>;
-        
+
 
         // set up the chart
         const donut_data = {
