@@ -34,9 +34,9 @@
         <div class="collapse navbar-collapse me-auto" id="navbarsExample05" style="float:right;">
             <div class="ms-auto">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="home.php" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="library.php" class="nav-link">Library</a></li>
-                    <li class="nav-item"><a href="reflection.php" class="nav-link active">Reflection</a></li>
+                  <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
+                  <li class="nav-item"><a href="?action=library" class="nav-link ">Library</a></li>
+                  <li class="nav-item"><a href="?action=reflection" class="nav-link active">Reflection</a></li>
                 </ul>
             </div>
         </div>

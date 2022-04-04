@@ -3,56 +3,61 @@ spl_autoload_register(function($classname) {
     include "classes/$classname.php";
 });
 
-// $db = new Database();
+echo("Creating tables: ");
 
-// $db->query("drop table if exists songs;");
-// $db->query("drop table if exists users;");
+$db = new Database();
 
-// // create users table
-// $db->query("create table users (
-//     userid int not null auto_increment,
-//     email text not null,
-//     name text not null,
-//     password text not null,
-//     primary key (userid)
-// );");
+$db->query("drop table if exists songs;");
+$db->query("drop table if exists users;");
 
-// // create song table
-// $db->query("create table songs (
-//     songid int not null auto_increment,
-//     userid int not null,
-//     title text not null,
-//     primary_artist text not null,
-//     geniusid int not null,
-//     image_url text not null,
-//     primary key (songid),
-//     foreign key (userid) references users(userid)
-// );");
+// create users table
+$db->query("create table users (
+    userid int not null auto_increment,
+    email text not null,
+    name text not null,
+    password text not null,
+    primary key (userid)
+);");
 
-function searchGenius($title, $artist) {
-    $search_term = str_replace(" ", "%20", $title . " " . $artist);
+// create song table
+$db->query("create table songs (
+    songid int not null auto_increment,
+    userid int not null,
+    title text not null,
+    primary_artist text not null,
+    geniusid int not null,
+    image_url text not null,
+    primary key (songid),
+    foreign key (userid) references users(userid)
+);");
 
-    $client_access_token = Config::$access_token;
-    $genius_search_url = "http://api.genius.com/search?q={$search_term}&access_token={$client_access_token}";
+echo("Success");
 
-    echo $genius_search_url;
 
-    $curl = curl_init($genius_search_url);
-    curl_setopt($curl, CURLOPT_URL, $genius_search_url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+// function searchGenius($title, $artist) {
+//     $search_term = str_replace(" ", "%20", $title . " " . $artist);
+
+//     $client_access_token = Config::$access_token;
+//     $genius_search_url = "http://api.genius.com/search?q={$search_term}&access_token={$client_access_token}";
+
+//     echo $genius_search_url;
+
+//     $curl = curl_init($genius_search_url);
+//     curl_setopt($curl, CURLOPT_URL, $genius_search_url);
+//     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
     
-    $resp = curl_exec($curl);
-    curl_close($curl);
-    return json_decode($resp, true);
-}
+//     $resp = curl_exec($curl);
+//     curl_close($curl);
+//     return json_decode($resp, true);
+// }
 
-$hits = searchGenius("I Wonder", "Kanye West")["response"]['hits'];
+// $hits = searchGenius("I Wonder", "Kanye West")["response"]['hits'];
 
 
-echo "<pre>";
-foreach ($hits as $hit) {
-    print_r($hit['result']);
-}
+// echo "<pre>";
+// foreach ($hits as $hit) {
+//     print_r($hit['result']);
+// }
 
-echo "</pre>";
+// echo "</pre>";

@@ -146,4 +146,18 @@ class MMController {
         curl_close($curl);
         return json_decode($resp, true);
     }
+
+   public function getReflection() {
+
+
+    include('templates/reflection.php');
+   }
+
+   public function home() {
+
+    
+    include('templates/home.php');
+   }
+
+
 }
