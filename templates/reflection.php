@@ -60,13 +60,13 @@
     <div class = "chart-container col-4">
         <canvas id="donut" aria-label="Donut graph of genres" role="canvas"></canvas>
     </div>
-    <div class = "chart-container col-4">
+    <!-- <div class = "chart-container col-4">
         <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
     </div>
 
     <div class = "chart-container col-4" >
         <canvas id="polar" aria-label="Radar graph of genres" role="canvas"></canvas>
-    </div>
+    </div> -->
     
 </section>
 
@@ -78,6 +78,10 @@
 <!-- donut graph of musical activities -->
 <section class = "container">
     <script style = "height: 200px">
+        //initialize data vals: 
+        var test_val = <?php echo $js_out_dval; ?>;
+        
+
         // set up the chart
         const donut_data = {
         labels: [
@@ -87,7 +91,7 @@
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [4, 12, 23],
+          data: [test_val, 12, 23],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -113,7 +117,7 @@
     donut_config
   );</script>
 
-<!-- polar area chart of musical activity -->
+<!-- //polar area chart of musical activity -->
 <section class = "container">
     <script>
         const data = {
@@ -214,8 +218,8 @@ const radar_config = {
   );</script>
 
 
- <footer class = "primary-footer row">
-     <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
+<footer class = "primary-footer row">
+  <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
 </footer>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -47,7 +47,7 @@
 <section class = "container-fluid col-12" style = "padding-top: 60px" >
   <div class="bg-dark text-secondary px-4 py-3 text-center">
       <div class="py-3">
-        <h1 class="display-5 fw-bold text-white " style="font-size:4vw;">Welcome Back, <strong class = "gradient-text" style = "font-style: italic;">Username.</strong></h1>
+        <h1 class="display-5 fw-bold text-white " style="font-size:4vw;">Welcome Back, <strong class = "gradient-text" style = "font-style: italic;"><?=$_SESSION["name"]?>.</strong></h1>
             <div class="col-lg-6 mx-auto">
               <p class="fs-5 mb-4" style = "color: grey">Based on your recent adds, we've curated these three songs as your daily recommendations:</p>
     

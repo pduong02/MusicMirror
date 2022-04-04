@@ -52,6 +52,8 @@ class MMController {
                 // new user
                 $insert = $this->db->query("insert into users (name, email, password) values (?, ?, ?);", 
                                                                 "sss", $_POST["name"], $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+                $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
+
                 if ($insert === false) {
                     $error_msg = "Error inserting user";
                 } else {
@@ -104,6 +106,8 @@ class MMController {
             "id" => $_SESSION['userid']
         ];
 
+        echo print_r($user);
+
         if (!isset($_SESSION["hits"])) {
             $error_msg = "Hits not stored properly.";
             header("Location: ?action=library");
@@ -148,7 +152,8 @@ class MMController {
     }
 
    public function getReflection() {
-
+    $data_val = 30;
+    $js_out_dval = json_encode($data_val);
 
     include('templates/reflection.php');
    }

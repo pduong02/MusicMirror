@@ -81,7 +81,7 @@
         </div>
 
         <!-- User's tracklist -->
-        <div class="container-xl" id="tracklist">
+        <div class="container-xl" id="tracklist" style = "bottom-padding: 20px">
             <?php
                 foreach ($songs as $song) {
                     echo "<div class='row track'>";
@@ -101,12 +101,11 @@
 
 
         <!-- Copyright -->
-        <footer class = "primary-footer row">
+     <footer class = "primary-footer row" style = "padding-top: 40px">
 
-            <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
-   
-        </footer>
+         <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
 
+     </footer>
         
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
