@@ -58,13 +58,14 @@ class MMController {
                 // new user
                 $insert = $this->db->query("insert into users (name, email, password) values (?, ?, ?);", 
                                                                 "sss", $_POST["name"], $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
 
                 if ($insert === false) {
                     $error_msg = "Error inserting user";
                 } else {
                     $_SESSION["name"] = $_POST["name"];
                     $_SESSION["email"] = $_POST["email"];
-                    $_SESSION['userid'] = $insert[0]["userid"];
+                    $_SESSION['userid'] = $data[0]["userid"];
                     header("Location: ?action=home");
                 }
             }
@@ -158,10 +159,11 @@ class MMController {
 
     //return artists ranked by # of appearances: 
     public function artistRanking(){
-        $songs = $this->db->query("select primary_artist, count(*) as artists FROM songs GROUP BY primary_artist" );
+        $userid = $_SESSION['userid'];
+        $songs = $this->db->query("select primary_artist, count(*) as count FROM songs where userid = $userid group by primary_artist");
         echo print_r($songs);
         
-
+        
         
     }
 
