@@ -116,7 +116,7 @@ class MMController {
             "id" => $_SESSION['userid']
         ];
 
-        echo print_r($user);
+        // echo print_r($user);
 
         if (!isset($_SESSION["hits"])) {
             $error_msg = "Hits not stored properly.";
