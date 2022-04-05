@@ -25,6 +25,7 @@ class MMController {
                 break;
             case "logout":
                 $this->destroySession();
+
             case "login":
                 // check email with regex
                 // store user name/email in cookie
@@ -41,6 +42,9 @@ class MMController {
 
     public function login() {
         if (isset($_POST["email"]) && !empty($_POST["email"]) && !empty($_POST["name"])) {
+            setcookie("email",$_POST["email"],time()+3600);
+            setcookie("name",$_POST["name"],time()+3600);
+
             $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
                 $error_msg = "Error checking for user";
