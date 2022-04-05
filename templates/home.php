@@ -73,8 +73,8 @@
         echo "<p class='fs-5 mb-4'>All your recommendations for today have been added to your library. Check back again tomorrow for your new recommendations!</p>";
         echo '</div>';
       } else if (isset($recommendations)) {
+        echo '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">';
         foreach ($recommendations as $rec) {
-          echo '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">';
           $json = json_encode($rec);
           echo "<div class=\"col\">";
           echo "<div class=\"card shadow-sm\">";
@@ -96,9 +96,8 @@
           echo "</div>";
           echo "</div>";
           echo "</div>";
-
-          echo "</div>";
         }
+        echo "</div>";
       } else {
         echo "Recommendations not set";
       }

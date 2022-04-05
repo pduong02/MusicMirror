@@ -23,6 +23,9 @@ class MMController {
             case "home":
                 $this->home();
                 break;
+            case "newuser":
+                $this->initializeLibrary();
+                break;
             case "logout":
                 $this->destroySession();
             case "login":
@@ -38,7 +41,7 @@ class MMController {
     }
 
     public function login() {
-        if (isset($_POST["email"]) && !empty($_POST["email"]) && !empty($_POST["name"])) {
+        if (isset($_POST["email"]) && isset($_POST["name"]) && $this->validateLogin($_POST)) {
             $data = $this->db->query("select * from users where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
                 $error_msg = "Error checking for user";
@@ -49,7 +52,7 @@ class MMController {
                     $_SESSION["email"] = $data[0]["email"];
                     $_SESSION['userid'] = $data[0]["userid"];
                     $_SESSION["last_refresh"] = $data[0]["last_refresh"];
-                    header("Location: ?action=library");
+                    header("Location: ?action=home");
                 } else {
                     $error_msg = "Wrong password";
                 }
@@ -67,16 +70,90 @@ class MMController {
 
                     $_SESSION["name"] = $_POST["name"];
                     $_SESSION["email"] = $_POST["email"];
-                    $_SESSION['userid'] = $getid[0];
+                    $_SESSION['userid'] = $getid[0]['userid'];
                     $_SESSION['last_refresh'] = date('Y-m-d', strtotime("-1 week"));
-                    header("Location: ?action=library");
+                    header("Location: ?action=newuser");
                 }
             }
+        } else if (isset($_POST['email']) || isset($_POST['name'])) {
+            $error_msg = "Invalid login. Please provide a valid name and email.";
         }
 
         include("templates/login.php");
     }
+
+    private function validateLogin($post) {
+        if ($this->validateEmail($post['email'])) {
+            if ($this->validateName($post['name'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function validateName($name) {
+        $regex = "/[A-Za-z\ \']*/";
+
+        if (!empty($name)) {
+            if (preg_match($regex, $name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function validateEmail($email) {
+        $standard="/^[A-Za-z0-9\-\_\+][A-Za-z0-9\-\_\+\.]*[A-Za-z0-9\-\_\+]@[A-Za-z0-9\-\.]+\.[A-Za-z0-9\-\.]+/";
+        
+        if (!empty($email)) {
+            if (preg_match($standard, $email)) {
+                if (!empty($regex)) {
+                    if (preg_match($regex, $email)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
     
+    public function initializeLibrary() {
+        $user = [
+            "name" => $_SESSION["name"],
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION["userid"]
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == "GET") {
+            $library = $this->db->query("select * from songs where userid = ?", "i", $user['id']);
+
+            if ($library === false) {
+                $error_msg = "Failed to fetch user's library from user table";
+            }
+
+            if (count($library) >= 10) {
+                header("Location: ?action=home");
+            }
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $hits = $this->searchGenius($_POST["form-songtitle"], $_POST["form-artist"]);
+            
+            if ($hits === false) {
+                $error_msg = "Failed to make genius request.";
+            }
+            
+            $_SESSION["hits"] = $hits['response']['hits'];
+            $_SESSION["title"] = $_POST["form-songtitle"];
+            $_SESSION["artist"] = $_POST["form-artist"];
+            $_SESSION['fromNewUser'] = true;
+
+            header("Location: ?action=addsong");
+        }
+
+        include("templates/newuser.php");
+    }
 
     public function showLibrary() {
         $user = [
@@ -84,7 +161,7 @@ class MMController {
             "email" => $_SESSION["email"],
             "id" => $_SESSION["userid"]
         ];
-
+        echo $_SESSION['fromNewUser'];
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hits = $this->searchGenius($_POST["form-songtitle"], $_POST["form-artist"]);
             
@@ -133,7 +210,11 @@ class MMController {
                     $error_msg = "Failed to insert into songs table";
                 }
 
-                header("Location: ?action=library");
+                if (isset($_SESSION['fromNewUser']) && $_SESSION['fromNewUser']) {
+                    header("Location: ?action=newuser");
+                } else {
+                    header("Location: ?action=library");
+                }
                 
             } else {
                 $error_msg = "Did not successfully encode song info";
