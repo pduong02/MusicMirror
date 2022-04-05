@@ -1,3 +1,8 @@
 html_var/index_validation.pdf
 html_var/library_validation.pdf
 html_var/reflection_validation.pdf
+Config.php
+*.pdf
+curl-log.txt
+spotify.php
+test.php
