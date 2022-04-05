@@ -3,6 +3,7 @@
  <!DOCTYPE html>
  <html lang="en">
      <head> <title>MusicMirror</title>
+     <link rel="stylesheet" href="./styles/home_styles.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
@@ -46,7 +47,7 @@
 </nav>
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
-<div class = "col-10 p-5" style = "padding-bottom: 50px">
+<div class = "row p-5" style = "padding-top: 50px, padding-bottom: 50px">
     <h1 id = "reflection-intro">
         This is your <strong class = "gradient-text">Reflection</strong>, <?=$_SESSION["name"]?>.</strong>
   </h1>
@@ -54,19 +55,21 @@
         We've created this tool to give you a closer look at your musical personality and find the insights that you've been looking for. 
         As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers! 
     </p>
-
-    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
-    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s</strong> productions in your rotation. That's some great taste right there.</h5>
-    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> <?=$age_msg?></h5>
+    <div style = "margin:auto">
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> Let's show some love to the engineers. You've got <strong><?=$producer?>'s</strong> productions in your rotation!</h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> <?=$age_msg?></h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> With <?=$samplePercent?>% of your songs being sampled, we'd say your music taste is <?=$smplmsg?> to the producers out there.</h5>
+    </div>
 
     <!-- <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5> -->
 
 
 </div>
 
-<!-- next section with more advanced insights:  -->
+<!-- next section with more advanced insights: 
 <div class = "col-10 p-5">
-</div>
+</div> -->
 
 
 <!-- beginning of the graphs  -->
@@ -75,13 +78,13 @@
     <div class = "chart-container col-4">
         <canvas id="donut" aria-label="Donut graph of genres" role="canvas"></canvas>
     </div>
-     <div class = "chart-container col-4"> 
+     <!-- <div class = "chart-container col-4"> 
         <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
-    </div>
+    </div> -->
 
     <div class = "chart-container col-4" >
         <canvas id="polar" aria-label="Radar graph of genres" role="canvas"></canvas>
-    </div> -->
+    </div> 
     
 </section>
 
@@ -134,7 +137,18 @@
     const donut_config = {
         type: 'doughnut',
         data: donut_data,
+
+        options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Age Breakdown'
+            }
+        }
+    }
+
       };
+
 
     </script>
   </section>
@@ -146,26 +160,48 @@
     donut_config
   );</script>
 
+
+
+
+
+
+
+
+
 <!-- //polar area chart of musical activity -->
 <section class = "container">
     <script>
+        var zero10k = <?= $views["lowk"]; ?>;
+        var ten50k = <?= $views["midk"]; ?>;
+        var fifty100k = <?= $views["upperk"]; ?>;
+        var hund250k = <?= $views["lowhundk"]; ?>;
+        var twohund500k = <?= $views["midhundk"]; ?>;
+        var fivehund1mil = <?= $views["uphundk"]; ?>;
+        var overmil = <?= $views["overmil"]; ?>;
+
         const data = {
         labels: [
-          'Moody',
-          'Mellow',
-          'Hype',
-          'Soothing',
-          'Upbeat'
+          '0-10K',
+          '10-50K',
+          '50-100K',
+          '100-250K',
+          '250-500K',
+          '500K-1mil',
+          'Above 1mil'
+
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [11, 16, 7, 3, 14],
+          data: [zero10k, ten50k, fifty100k, hund250k, twohund500k, fivehund1mil, overmil],
           backgroundColor: [
             'rgb(52, 158, 235)',
             'rgb(75, 192, 192)',
             'rgb(255, 205, 86)',
             'rgb(201, 203, 207)',
-            'rgb(66, 94, 143)'
+            'rgb(68, 94, 143)',
+            'rgb(126, 94, 103)',
+            'rgb(84, 23, 95)'
+
           ]
         }]
       };
@@ -173,7 +209,14 @@
 const polar_config = {
   type: 'polarArea',
   data: data,
-  options: {}
+  options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Genius Views Breakdown'
+            }
+        }
+    }
 };
     </script>
 </section>

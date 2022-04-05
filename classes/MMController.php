@@ -185,7 +185,7 @@ class MMController {
         $oldies = 0;
 
         foreach ($user_songs as $started){
-            $year = explode("-",$started)[0];
+            $year = explode("-",$started[0])[0];
             if (intval($year) >= 2020){
                 $twenty20s ++;
             }
@@ -226,36 +226,98 @@ class MMController {
             case "2020s":
                 $interval = "2020s";
                 $count = $years["2020s"];
-                $msg = "With $count songs from the $interval, we'd call you hip with the times.";
+                $msg = "With <strong>$count</strong> songs from the $interval, we'd call you hip with the times.";
                 break;
             case "2010s":
                 $interval = "2010s";
                 $count = $years["2010s"];
-                $msg = "With $count songs from the $interval, your vibes are pretty modern.";
+                $msg = "With <strong>$count</strong> songs from the $interval, your vibes are pretty modern.";
                 break;
             case "2000s":
                 $interval = "2000s";
                 $count = $years["2000s"];
-                $msg = "With $count songs from the $interval, it's clear you love your throwbacks.";
+                $msg = "With <strong>$count</strong> songs from the $interval, it's clear you love your throwbacks.";
                 break;  
             case "1990s":
                 $interval = "1990s";
                 $count = $years["1990s"];
-                $msg = "With $count songs from the $interval, you're getting jiggy with it!";
+                $msg = "With <strong>$count</strong> songs from the $interval, you're getting jiggy with it!";
                 break;         
             case "1980s":
                 $interval = "1980s";
                 $count = $years["1980s"];
-                $msg = "With $count songs from the $interval, your music taste is delightfully retro.";
+                $msg = "With <strong>$count</strong> songs from the $interval, your music taste is delightfully retro.";
                 break;
             case "oldies":
                 $interval = "oldies";
                 $count = $years["oldies"];
-                $msg = "With $count songs from the $interval (pre-1980s), you don't hesitate to give the OG songs their flowers.";
+                $msg = "With <strong>$count</strong> songs from the $interval (pre-1980s), you don't hesitate to give the OG songs their flowers.";
                 break;
         }
 
         return $msg;
+    }
+
+    //return songs grouped by age: fed the $user_songs array with producer-year pairs
+    public function viewGrouping($user_songs){
+        $views = array();
+        $zero10k= 0;
+        $ten50k = 0;
+        $fifty100k= 0;   
+        $hund250k = 0;
+        $twohund500k= 0;
+        $fivehund1mil = 0;
+        $overmil = 0;
+
+        foreach ($user_songs as $song){
+            $view = $song[2];
+            // echo($view);
+            if (intval($view) < 10000){
+                $zero10k++;
+                // echo "happening";
+            }
+            else if (intval($view) >= 10000 and intval($view)<50000){
+                $ten50k ++;
+                // echo "happening";
+
+            }
+            else if (intval($view) >= 50000 and intval($view)<100000){
+                $fifty100k ++;
+                // echo "happening";
+
+            }
+            else if (intval($view) >= 100000 and intval($view)<250000){
+                $hund250k++;
+                // echo "happening";
+
+            }
+            else if (intval($view) >= 250000 and intval($view)<500000){
+                $twohund500k ++;
+                // echo "happening";
+
+            }
+            else if (intval($view) >= 500000 and intval($view)<1000000){
+                $fivehund1mil ++;
+                // echo"happening";
+
+            }
+            else if (intval($view) >= 1000000){
+                $overmil ++;
+                // echo "happening";
+
+            }
+
+        }
+
+        $views["lowk"] = $zero10k;
+        $views["midk"] = $ten50k;
+        $views["upperk"] = $fifty100k;
+        $views["lowhundk"] = $hund250k;
+        $views["midhundk"] = $twohund500k;
+        $views["uphundk"] = $fivehund1mil;
+        $views["overmil"] = $overmil;
+
+        return $views;
     }
 
 
@@ -281,14 +343,23 @@ class MMController {
         return json_decode($resp, true);
 }
 
-    //return producer info and launch year info (we can modify to give us more)
+    //return array: {producer: {launch year, issampled, viewcount}}
     function userSongs(){
         $userid = $_SESSION['userid'];
         $songs = $this->db->query("select * FROM songs where userid = $userid");
         $songs_info = array(); 
         foreach($songs as $song){
             $result = $this->getGeniusSong($song["geniusid"])['response']['song'];
-            $songs_info[$result["producer_artists"][0]['name']] = $result["release_date"];
+
+            //check if sampled
+            if ($result["song_relationships"][1]["songs"] !== NULL){
+                $isSampled = TRUE;
+            }
+            else{
+                $isSampled = FALSE;
+            }
+
+            $songs_info[$result["producer_artists"][0]['name']] = [$result["release_date"],$isSampled, $result["stats"]["pageviews"]];
         }
 
         // echo print_r($songs_info);
@@ -301,10 +372,10 @@ class MMController {
         $data_val = 30;
         $js_out_dval = json_encode($data_val);
         $userSongs = $this->userSongs();
+        // echo print_r($userSongs);
     
         #return top artists: 
         $sortedArtists = $this->artistRanking();
-
         $top_artist = $sortedArtists[0]["primary_artist"];
         $top_count = $sortedArtists[0]["count"];
     
@@ -312,9 +383,28 @@ class MMController {
         $years = $this->ageGrouping($userSongs);
         $age_msg = $this->ageMessage($years);
         
-        #randomly select a producer in the rotation: 
+        #randomly select a producer in the rotation, hype them up: 
         $producer = array_rand($userSongs,1);
 
+        #percentage of songs sampled: 
+        $sampleCount = 0;
+        $smplmsg = "";
+        foreach($userSongs as $song){
+            if($song[1] == 1){
+                $sampleCount ++; 
+            }
+        }
+        $samplePercent = 100 * round($sampleCount/count($userSongs), 2);
+        if ($samplePercent >= 50){
+            $smplmsg = "similar";
+        }
+        else{
+            $smplmsg = "somewhat different";
+        }
+        
+        #song popularity breakdown by views
+        $views = $this->viewGrouping($userSongs);
+        // echo var_dump($views);
 
     
         include('templates/reflection.php');
