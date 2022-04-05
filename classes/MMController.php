@@ -170,7 +170,7 @@ class MMController {
         return $sortedArtists = $artists;
     }
 
-    //return songs grouped by age: 
+    //return songs grouped by age: fed the $user_songs array with producer-year pairs
     public function ageGrouping($user_songs){
         $years = array();
         $twenty20s = 0;
@@ -213,7 +213,46 @@ class MMController {
         return $years;
     }
 
-  
+    public function ageMessage($years){
+        $msg = "";
+
+        // echo array_search(max($years),$years);
+        // since you have _ songs
+        switch(array_search(max($years),$years)){
+            case "2020s":
+                $interval = "2020s";
+                $count = $years["2020s"];
+                $msg = "With $count songs from the $interval, we'd call you hip with the times.";
+                break;
+            case "2010s":
+                $interval = "2010s";
+                $count = $years["2010s"];
+                $msg = "With $count songs from the $interval, your vibes are pretty modern.";
+                break;
+            case "2000s":
+                $interval = "2000s";
+                $count = $years["2000s"];
+                $msg = "With $count songs from the $interval, it's clear you love your throwbacks.";
+                break;  
+            case "1990s":
+                $interval = "1990s";
+                $count = $years["1990s"];
+                $msg = "With $count songs from the $interval, you're getting jiggy with it!";
+                break;         
+            case "1980s":
+                $interval = "1980s";
+                $count = $years["1980s"];
+                $msg = "With $count songs from the $interval, your music taste is delightfully retro.";
+                break;
+            case "oldies":
+                $interval = "oldies";
+                $count = $years["oldies"];
+                $msg = "With $count songs from the $interval (pre-1980s), you don't hesitate to give the OG songs their flowers.";
+                break;
+        }
+
+        return $msg;
+    }
 
 
    function getGeniusSong($songid) {
@@ -267,9 +306,12 @@ class MMController {
     
         #return song age groupings: 
         $years = $this->ageGrouping($userSongs);
+        $age_msg = $this->ageMessage($years);
         
         #randomly select a producer in the rotation: 
         $producer = array_rand($userSongs,1);
+
+
     
         include('templates/reflection.php');
        }

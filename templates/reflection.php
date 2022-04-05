@@ -6,7 +6,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
-      <link rel="stylesheet" href="./styles/home_styles.css">
+      <!-- <link rel="stylesheet" href="./styles/home_styles.css"> -->
       <link rel="stylesheet" href="./styles/reflection_styles.css">
 
       <link rel="stylesheet/less" type="text/css" href="./styles.less" />
@@ -56,8 +56,10 @@
     </p>
 
     <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
-    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5>
-    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5>
+    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s</strong> productions in your rotation. That's some great taste right there.</h5>
+    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> <?=$age_msg?></h5>
+
+    <!-- <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5> -->
 
 
 </div>
@@ -91,7 +93,7 @@
 <!-- donut graph of musical activities -->
 <section class = "container">
     <script style = "height: 200px">
-        //initialize data vals: 
+        //initialize data vals: get years from getReflection(), from ageGrouping()
         var twenty20s = <?= $years["2020s"]; ?>;
         var twenty10s = <?= $years["2010s"]; ?>;
         var twenty0s = <?= $years["2000s"]; ?>;
