@@ -14,6 +14,8 @@ $db->query("create table users (
     email text not null,
     name text not null,
     password text not null,
+    last_refresh text not null,
+    last_recs text,
     primary key (userid)
 );");
 

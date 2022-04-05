@@ -48,20 +48,27 @@ class MMController {
                     $_SESSION["name"] = $data[0]["name"];
                     $_SESSION["email"] = $data[0]["email"];
                     $_SESSION['userid'] = $data[0]["userid"];
+                    $_SESSION["last_refresh"] = $data[0]["last_refresh"];
                     header("Location: ?action=library");
                 } else {
                     $error_msg = "Wrong password";
                 }
             } else {
                 // new user
-                $insert = $this->db->query("insert into users (name, email, password) values (?, ?, ?);", 
-                                                                "sss", $_POST["name"], $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+                $insert = $this->db->query("insert into users (name, email, password, last_refresh) values (?, ?, ?, ?);", "ssss", $_POST["name"], 
+                                            $_POST["email"], password_hash($_POST["password"], PASSWORD_DEFAULT), date('Y-m-d', strtotime("-1 week")));
                 if ($insert === false) {
                     $error_msg = "Error inserting user";
                 } else {
+                    $getid = $this->db->query("select userid from users where email = ?", "s", $_POST['email']);
+                    if ($getid === false) {
+                        $error_msg = "Unable to retrieve userid after inserting new user";
+                    }
+
                     $_SESSION["name"] = $_POST["name"];
                     $_SESSION["email"] = $_POST["email"];
-                    $_SESSION['userid'] = $insert[0]["userid"];
+                    $_SESSION['userid'] = $getid[0];
+                    $_SESSION['last_refresh'] = date('Y-m-d', strtotime("-1 week"));
                     header("Location: ?action=library");
                 }
             }
@@ -155,7 +162,8 @@ class MMController {
         $user = [
             "name" => $_SESSION["name"],
             "email" => $_SESSION["email"],
-            "id" => $_SESSION['userid']
+            "id" => $_SESSION['userid'],
+            "last_refresh" => $_SESSION['last_refresh']
         ];
         $recommendations = array();
         // generate recommendations
@@ -170,11 +178,31 @@ class MMController {
 
             header("Location: ?action=home", true, 303);
         } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            // should be an array with 3 elements, containing title, artist, image, and genres
-            $recommendations = $this->getRecommendations($user);
+            $now = strtotime(date('Y-m-d'));
+            $last = strtotime($user['last_refresh']);
 
-            if (gettype($recommendations) != 'array') {
-                $error_msg = $recommendations;
+            // been at least a day since last refreshed the recommendations
+            if (abs($now - $last)/(60*60*24) >= 1) {
+                // should be an array with 3 elements, containing title, artist, image, and genres
+                $recommendations = $this->getRecommendations($user);
+                if (gettype($recommendations) != 'array') {
+                    $error_msg = $recommendations;
+                } else {
+                    $_SESSION["last_refresh"] = date('Y-m-d');
+                    $insert = $this->db->query("update users set last_recs = ?, last_refresh = ? where userid = ?", "ssi", 
+                                                json_encode($recommendations), date('Y-m-d'), $user['id']);
+                    if ($insert === false) {
+                        $error_msg = "Failed to update recommendations in user table";
+                    }
+                }
+            } else {
+                $recsjson = $this->db->query("select last_recs from users where userid = ?", "i", $user['id']);
+
+                if ($recsjson === false) {
+                    $error_msg = "Failed to extract previous recommendations from user table.";
+                }
+
+                $recommendations = json_decode($recsjson[0]['last_recs'], true);
             }
         }
 
