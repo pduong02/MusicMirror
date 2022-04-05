@@ -23,7 +23,7 @@
         <!--- Navigation between sites -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home.php" style="font-weight: bolder">MusicMirror.</a>
+                <a class="navbar-brand" href="?action=home" style="font-weight: bolder">MusicMirror.</a>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,9 +31,10 @@
                 <div class="collapse navbar-collapse me-auto" id="navbarsExample05" style="float:right;">
                     <div class="ms-auto">
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a href="home.php" class="nav-link">Home</a></li>
-                            <li class="nav-item"><a href="library.php" class="nav-link active">Library</a></li>
-                            <li class="nav-item"><a href="reflection.php" class="nav-link">Reflection</a></li>
+                            <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
+                            <li class="nav-item"><a href="?action=library" class="nav-link active">Library</a></li>
+                            <li class="nav-item"><a href="?action=reflection" class="nav-link">Reflection</a></li>
+                            <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
                         </ul>
                     </div>
                 </div>

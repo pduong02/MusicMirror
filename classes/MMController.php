@@ -171,9 +171,25 @@ class MMController {
             // user asked to add song to library, add song then redirect back to home
             $songinfo = json_decode($_POST['songinfo'], true);
             $res = $this->db->query("insert into songs (userid, title, primary_artist, geniusid, image_url) values (?, ?, ?, ?, ?)", "issis", $user['id'], 
-                                    $songinfo['title'], $songinfo['artist'], $songinfo['songid'], $songinfo['image_url']);
+                                    $songinfo['title'], $songinfo['primary_artist'], $songinfo['songid'], $songinfo['image_url']);
             if ($res === false) {
                 $error_msg = "Failed to insert into songs table";
+            }
+
+            $recsjson = $this->db->query("select last_recs from users where userid = ?", "i", $user['id']);
+
+            if ($recsjson === false) {
+                $error_msg = "Failed to extract previous recommendations from user table.";
+            }
+
+            $recommendations = json_decode($recsjson[0]['last_recs'], true);
+
+            if (($key = array_search($songinfo, $recommendations)) !== false) {
+                unset($recommendations[$key]);
+                $update = $this->db->query("update users set last_recs = ? where userid = ?", "si", json_encode($recommendations), $user['id']);
+                if ($update === false) {
+                    $error_msg = "Failed to update last recs in user table";
+                }
             }
 
             header("Location: ?action=home", true, 303);
@@ -272,7 +288,8 @@ class MMController {
                                     "title" => $t,
                                     "primary_artist" => $a,
                                     "genius_url" => $genius_url,
-                                    "producer" => $name
+                                    "producer" => $name,
+                                    "songid" => $results[$i]['result']['id']
                                 ));
                                 break;
                             }
@@ -309,7 +326,8 @@ class MMController {
                             "title" => $t,
                             "primary_artist" => $a,
                             "genius_url" => $genius_url,
-                            "producer" => $name
+                            "producer" => $name,
+                            "songid" => $results[$i]['result']['id']
                         ));
                     }
                     $i++;
@@ -337,7 +355,8 @@ class MMController {
                             "title" => $t,
                             "primary_artist" => $a,
                             "genius_url" => $genius_url,
-                            "producer" => $name
+                            "producer" => $name,
+                            "songid" => $results[$i]['result']['id']
                         ));
                         break;
                     }
@@ -369,7 +388,8 @@ class MMController {
                             "title" => $t,
                             "primary_artist" => $a,
                             "genius_url" => $genius_url,
-                            "producer" => $name
+                            "producer" => $name,
+                            "songid" => $results[$i]['result']['id']
                         ));
                     }
                     $i++;
