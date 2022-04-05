@@ -160,28 +160,124 @@ class MMController {
     //return artists ranked by # of appearances: 
     public function artistRanking(){
         $userid = $_SESSION['userid'];
-        $songs = $this->db->query("select primary_artist, count(*) as count FROM songs where userid = $userid group by primary_artist");
-        echo print_r($songs);
-        
-        
-        
+        $artists = $this->db->query("select primary_artist, count(*) as count FROM songs where userid = $userid group by primary_artist");
+
+        usort($artists, function ($artist1, $artist2) {
+            return $artist2['count'] <=> $artist1['count'];
+        });
+
+        // echo print_r($artists);
+        return $sortedArtists = $artists;
+    }
+
+    //return songs grouped by age: 
+    public function ageGrouping($user_songs){
+        $years = array();
+        $twenty20s = 0;
+        $twenty10s = 0;
+        $twenty0s= 0;
+        $nineteen90s = 0;
+        $nineteen80s= 0;
+        $oldies = 0;
+
+        foreach ($user_songs as $started){
+            $year = explode("-",$started)[0];
+            if (intval($year) >= 2020){
+                $twenty20s ++;
+            }
+            else if (intval($year) >= 2010){
+                $twenty10s ++;
+            }
+            else if (intval($year) >= 2000){
+                $twenty0s ++;
+            }
+            else if (intval($year) >= 1990){
+                $nineteen90s ++;
+            }
+            else if (intval($year) >= 1980){
+                $nineteen80s ++;
+            }
+            else if (intval($year) < 1980){
+                $oldies++;
+            }
+
+        }
+
+        $years["2020s"] = $twenty20s;
+        $years["2010s"] = $twenty10s;
+        $years["2000s"] = $twenty0s;
+        $years["1990s"] = $nineteen90s;
+        $years["1980s"] = $nineteen80s;
+        $years["oldies"] = $oldies;
+
+        return $years;
+    }
+
+  
+
+
+   function getGeniusSong($songid) {
+        $client_access_token = Config::$access_token;
+        $genius_search_url = "http://api.genius.com/songs/{$songid}";
+
+        // echo $genius_search_url;
+
+        $curl = curl_init($genius_search_url);
+        curl_setopt($curl, CURLOPT_URL, $genius_search_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
+        $headers = array(
+            "Authorization: Bearer ".Config::$access_token,
+        );
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        return json_decode($resp, true);
+}
+
+    //return producer info and launch year info (we can modify to give us more)
+    function userSongs(){
+        $userid = $_SESSION['userid'];
+        $songs = $this->db->query("select * FROM songs where userid = $userid");
+        $songs_info = array(); 
+        foreach($songs as $song){
+            $result = $this->getGeniusSong($song["geniusid"])['response']['song'];
+            $songs_info[$result["producer_artists"][0]['name']] = $result["release_date"];
+        }
+
+        // echo print_r($songs_info);
+        return $songs_info;
+
     }
 
 
-   public function getReflection() {
-    $data_val = 30;
-    $js_out_dval = json_encode($data_val);
-
-    $this->artistRanking();
-
-    include('templates/reflection.php');
-   }
-
-   public function home() {
-
+    public function getReflection() {
+        $data_val = 30;
+        $js_out_dval = json_encode($data_val);
+        $userSongs = $this->userSongs();
     
-    include('templates/home.php');
-   }
+        #return top artists: 
+        $sortedArtists = $this->artistRanking();
 
+        $top_artist = $sortedArtists[0]["primary_artist"];
+        $top_count = $sortedArtists[0]["count"];
+    
+        #return song age groupings: 
+        $years = $this->ageGrouping($userSongs);
+        
+        #randomly select a producer in the rotation: 
+        $producer = array_rand($userSongs,1);
+    
+        include('templates/reflection.php');
+       }
+    
+       public function home() {
+    
+        
+        include('templates/home.php');
+       }
 
 }

@@ -37,7 +37,8 @@
                   <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
                   <li class="nav-item"><a href="?action=library" class="nav-link ">Library</a></li>
                   <li class="nav-item"><a href="?action=reflection" class="nav-link active">Reflection</a></li>
-                  <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
+                                  <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
+
                 </ul>
             </div>
         </div>
@@ -45,27 +46,34 @@
 </nav>
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
-<div class = "col-10 p-5">
+<div class = "col-10 p-5" style = "padding-bottom: 50px">
     <h1 id = "reflection-intro">
-        This is your <strong>Reflection</strong>, <?=$_SESSION["name"]?>.</strong>
+        This is your <strong class = "gradient-text">Reflection</strong>, <?=$_SESSION["name"]?>.</strong>
   </h1>
     <p style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px">
         We've created this tool to give you a closer look at your musical personality and find the insights that you've been looking for. 
-        As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers. 
+        As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers! 
     </p>
+
+    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
+    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5>
+    <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5>
+
+
 </div>
 
 <!-- next section with more advanced insights:  -->
-
+<div class = "col-10 p-5">
+</div>
 
 
 <!-- beginning of the graphs  -->
-<section class = "container-fluid col-12 row-cols-3">
+<section class = "container-fluid col-12 row-cols-3" style = "padding-top: 50px">
 <!-- chart canvas instantiation (from Chart.js) -->
     <div class = "chart-container col-4">
         <canvas id="donut" aria-label="Donut graph of genres" role="canvas"></canvas>
     </div>
-    <!-- <div class = "chart-container col-4">
+     <div class = "chart-container col-4"> 
         <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
     </div>
 
@@ -84,23 +92,37 @@
 <section class = "container">
     <script style = "height: 200px">
         //initialize data vals: 
-        var test_val = <?php echo $js_out_dval; ?>;
+        var twenty20s = <?= $years["2020s"]; ?>;
+        var twenty10s = <?= $years["2010s"]; ?>;
+        var twenty0s = <?= $years["2000s"]; ?>;
+        var nineteen90s = <?= $years["1990s"]; ?>;
+        var nineteen80s = <?= $years["1980s"]; ?>;
+        var oldies = <?= $years["oldies"]; ?>;
+
 
 
         // set up the chart
         const donut_data = {
         labels: [
-          'Hip-Hop/Rap',
-          'Indie',
-          'Pop'
+          '2020s',
+          '2010s',
+          '2000s',
+          '1990s',
+          '1980s',
+          'Oldies',
+
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [test_val, 12, 23],
+          data: [twenty20s, twenty10s, twenty0s, nineteen90s,nineteen80s,oldies ],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
+            'rgb(259, 105, 186)',
+            'rgb(209, 205,26)',
+            'rgb(102, 205, 44)',
+            'rgb(235, 15, 209)'
+
           ],
           hoverOffset: 4
         }]
