@@ -47,7 +47,7 @@
 <section class = "container-fluid col-12" style = "padding-top: 60px" >
   <div class="bg-dark text-secondary px-4 py-3 text-center">
       <div class="py-3">
-        <h1 class="display-5 fw-bold text-white " style="font-size:4vw;">Welcome Back, <strong class = "gradient-text" style = "font-style: italic;">Username.</strong></h1>
+        <h1 class="display-5 fw-bold text-white " style="font-size:4vw;">Welcome Back, <strong class = "gradient-text" style = "font-style: italic;"><?=$user['name']?>.</strong></h1>
             <div class="col-lg-6 mx-auto">
               <p class="fs-5 mb-4" style = "color: grey">Based on your recent adds, we've curated these three songs as your daily recommendations:</p>
     
@@ -62,8 +62,38 @@
 
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-<!-- ---------------------------------------------------------- -->
-<!-- song recommendation #1 -->
+      <!-- ---------------------------------------------------------- -->
+      <!-- song recommendations -->
+      <?php 
+        if (!empty($error_msg)) {
+          echo "<div class='alert alert-danger col-4'>$error_msg</div>";
+        }
+
+        if (isset($recommendations)) {
+          foreach ($recommendations as $rec) {
+            echo "<div class=\"col\">";
+            echo "<div class=\"card shadow-sm\">";
+            echo "<img class=\"card-img-top\" src=\"{$rec['image_url']}\" alt=\"Recommended song album cover\">";
+
+            echo "<div class=\"card-body mx-fixed\">";
+            echo "<h5 class=\"card-title song-title\">{$rec['title']}</h5>";
+            echo "<h6 class=\"card-subtitle mb-2 text-muted\">{$rec['primary_artist']}</h6>";
+            echo "<small class=\"card-text\" style = \"padding-bottom: 10px\" >Because you liked a song produced by {$rec['producer']}</small>";
+            echo "<div class=\"d-flex justify-content-between align-items-center\">";
+            echo "<div class=\"btn-group\">";
+            echo "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">Listen</button>";
+            echo "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\">Add to Library</button>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+          }
+        } else {
+          echo "Recommendations not set";
+        }
+      ?>
+      <!-- song recommendation #1 
       <div class="col">
         <div class="card shadow-sm">
           <img class="card-img-top" src="../images/Channel_ORANGE.jpg" alt="Channel_ORANGE album cover">
@@ -82,7 +112,7 @@
         </div>
       </div>
 
-      <!-- song recommendation #2 -->
+      <-- song recommendation #2 ->
       <div class="col">
         <div class="card shadow-sm">
           <img class="card-img-top" src="../images/The_Slow_Rush_Tame.jpg" alt="Album cover of 'The Slow Rush' by Tame Impala">
@@ -101,7 +131,7 @@
         </div>
       </div>
 
-      <!-- song recommendation #3 -->
+      <-- song recommendation #3 ->
       <div class="col">
         <div class="card shadow-sm">
           <img class="card-img-top" src="../images/Flower_Boy.jpg" alt="Album cover of 'Flower Boy' by Tyler, the Creator">
@@ -119,6 +149,7 @@
           </div>
         </div>
       </div>
+      -->
       <!-- ----------------------------------------------------------- -->
     </div>
   </div>

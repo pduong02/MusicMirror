@@ -1,2 +1,5 @@
 Config.php
 *.pdf
+curl-log.txt
+spotify.php
+test.php
