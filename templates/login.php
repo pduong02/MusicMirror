@@ -3,37 +3,46 @@
     <head>
         <meta charset="UTF-8">  
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="Max Kouzel">
-        <meta name="description" content="Music Mirror Login Page">  
-        <title>Music Mirror Login</title>
-        
+        <meta name="author" content="CS4640">
+        <meta name="description" content="CS4640 Project Login Page">  
+        <title>Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> 
+        <link rel="stylesheet" type="text/css" href="./styles/login.css"/>
+
     </head>
-    <body>
-        <div>
-            <?php
-                if (!empty($error_msg)) {
-                    echo "<h3>$error_msg</h3>";
-                }
-            ?>
-            <form action="?command=login" method="post">
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email"/>
+    <body style = "background-image:url('images/lofibeatsgif.gif')">
+        <div class="container" style="margin-top: 15px;">
+            <div class="row col-xs">
+                <h1 style = "color: gold "><strong>MusicMirror.</strong></h1>
+                <p style = "color: white"> <strong>Welcome to your MusicMirror!  To get started, enter a username and password.</strong></p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                <?php
+                    if (!empty($error_msg)) {
+                        echo "<div class='alert alert-danger'>$error_msg</div>";
+                    }
+                ?>
+                <form action="?command=login" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><strong>Email</strong></label>
+                        <input type="email" class="form-control" id="email" name="email"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label"><strong>Name</strong></label>
+                        <input type="text" class="form-control" id="name" name="name"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label"><strong>Password</strong></label>
+                        <input type="password" class="form-control" id="password" name="password"/>
+                    </div>
+                    <div class="text-center">                
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
                 </div>
-                <div>
-                    <label for="name">Name</label>
-                    <input type="text"id="name" name="name"/>
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password"id="password" name="password"/>
-                </div>
-                <div>                
-                <button type="submit">LOG IN</button>
-                </div>
-            </form>
+            </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </body>
-
-
 </html>

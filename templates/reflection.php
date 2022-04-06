@@ -3,10 +3,11 @@
  <!DOCTYPE html>
  <html lang="en">
      <head> <title>MusicMirror</title>
+     <link rel="stylesheet" href="./styles/home_styles.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
-      <link rel="stylesheet" href="./styles/home_styles.css">
+      <!-- <link rel="stylesheet" href="./styles/home_styles.css"> -->
       <link rel="stylesheet" href="./styles/reflection_styles.css">
 
       <link rel="stylesheet/less" type="text/css" href="./styles.less" />
@@ -34,9 +35,11 @@
         <div class="collapse navbar-collapse me-auto" id="navbarsExample05" style="float:right;">
             <div class="ms-auto">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="home.php" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="library.php" class="nav-link">Library</a></li>
-                    <li class="nav-item"><a href="reflection.php" class="nav-link active">Reflection</a></li>
+                  <li class="nav-item"><a href="?action=home" class="nav-link">Home</a></li>
+                  <li class="nav-item"><a href="?action=library" class="nav-link ">Library</a></li>
+                  <li class="nav-item"><a href="?action=reflection" class="nav-link active">Reflection</a></li>
+                                  <li class="nav-item"><a href="?action=logout" class="nav-link">Logout</a></li>
+
                 </ul>
             </div>
         </div>
@@ -44,29 +47,44 @@
   </nav>
 
   <!-- first section with a paragraph element and the pie chart next to it  -->
-<div class = "col-10 p-5">
-    <p id = "reflection-intro">
-        This is your <strong>Reflection</strong>, Username.
-    </p>
+<div class = "row p-5" style = "padding-top: 50px; padding-bottom: 50px">
+    <h1 id = "reflection-intro">
+        This is your <strong class = "gradient-text">Reflection</strong>, <?=$_SESSION["name"]?>.</strong>
+  </h1>
     <p style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px">
         We've created this tool to give you a closer look at your musical personality and find the insights that you've been looking for. 
-        As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers. 
+        As you explore, try to learn more about your top genres, artists, and listening patterns. Cheers! 
     </p>
+    <div style = "margin:auto">
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> Let's show some love to the engineers. You've got <strong><?=$producer?>'s</strong> productions in your rotation!</h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> <?=$age_msg?></h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> With <?=$samplePercent?>% of your songs being sampled, we'd say your music taste is <?=$smplmsg?> to the producers out there.</h5>
+    </div>
+
+    <!-- <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5> -->
+
+
 </div>
 
+<!-- next section with more advanced insights: 
+<div class = "col-10 p-5">
+</div> -->
+
+
 <!-- beginning of the graphs  -->
-<section class = "container-fluid col-12 row-cols-3">
+<section class = "container-fluid col-12 row-cols-3" style = "padding-top: 50px">
 <!-- chart canvas instantiation (from Chart.js) -->
     <div class = "chart-container col-4">
         <canvas id="donut" aria-label="Donut graph of genres" role="img"></canvas>
     </div>
-    <div class = "chart-container col-4">
-        <canvas id="radar" aria-label="Radar graph of genres" role="img"></canvas>
-    </div>
+     <!-- <div class = "chart-container col-4"> 
+        <canvas id="radar" aria-label="Radar graph of genres" role="canvas"></canvas>
+    </div> -->
 
     <div class = "chart-container col-4" >
-        <canvas id="polar" aria-label="Radar graph of genres" role="img"></canvas>
-    </div>
+        <canvas id="polar" aria-label="Radar graph of genres" role="canvas"></canvas>
+    </div> 
     
 </section>
 
@@ -78,20 +96,38 @@
 <!-- donut graph of musical activities -->
 <section class = "container">
     <script style = "height: 200px">
+        //initialize data vals: get years from getReflection(), from ageGrouping()
+        var twenty20s = <?= $years["2020s"]; ?>;
+        var twenty10s = <?= $years["2010s"]; ?>;
+        var twenty0s = <?= $years["2000s"]; ?>;
+        var nineteen90s = <?= $years["1990s"]; ?>;
+        var nineteen80s = <?= $years["1980s"]; ?>;
+        var oldies = <?= $years["oldies"]; ?>;
+
+
+
         // set up the chart
         const donut_data = {
         labels: [
-          'Hip-Hop/Rap',
-          'Indie',
-          'Pop'
+          '2020s',
+          '2010s',
+          '2000s',
+          '1990s',
+          '1980s',
+          'Oldies',
+
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [4, 12, 23],
+          data: [twenty20s, twenty10s, twenty0s, nineteen90s,nineteen80s,oldies ],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
+            'rgb(259, 105, 186)',
+            'rgb(209, 205,26)',
+            'rgb(102, 205, 44)',
+            'rgb(235, 15, 209)'
+
           ],
           hoverOffset: 4
         }]
@@ -101,7 +137,18 @@
     const donut_config = {
         type: 'doughnut',
         data: donut_data,
+
+        options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Age Breakdown'
+            }
+        }
+    }
+
       };
+
 
     </script>
   </section>
@@ -113,26 +160,48 @@
     donut_config
   );</script>
 
-<!-- polar area chart of musical activity -->
+
+
+
+
+
+
+
+
+<!-- //polar area chart of musical activity -->
 <section class = "container">
     <script>
+        var zero10k = <?= $views["lowk"]; ?>;
+        var ten50k = <?= $views["midk"]; ?>;
+        var fifty100k = <?= $views["upperk"]; ?>;
+        var hund250k = <?= $views["lowhundk"]; ?>;
+        var twohund500k = <?= $views["midhundk"]; ?>;
+        var fivehund1mil = <?= $views["uphundk"]; ?>;
+        var overmil = <?= $views["overmil"]; ?>;
+
         const data = {
         labels: [
-          'Moody',
-          'Mellow',
-          'Hype',
-          'Soothing',
-          'Upbeat'
+          '0-10K',
+          '10-50K',
+          '50-100K',
+          '100-250K',
+          '250-500K',
+          '500K-1mil',
+          'Above 1mil'
+
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [11, 16, 7, 3, 14],
+          data: [zero10k, ten50k, fifty100k, hund250k, twohund500k, fivehund1mil, overmil],
           backgroundColor: [
             'rgb(52, 158, 235)',
             'rgb(75, 192, 192)',
             'rgb(255, 205, 86)',
             'rgb(201, 203, 207)',
-            'rgb(66, 94, 143)'
+            'rgb(68, 94, 143)',
+            'rgb(126, 94, 103)',
+            'rgb(84, 23, 95)'
+
           ]
         }]
       };
@@ -140,7 +209,14 @@
 const polar_config = {
   type: 'polarArea',
   data: data,
-  options: {}
+  options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Genius Views Breakdown'
+            }
+        }
+    }
 };
     </script>
 </section>
@@ -214,8 +290,8 @@ const radar_config = {
   );</script>
 
 
- <footer class = "primary-footer row">
-     <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
+<footer class = "primary-footer row">
+  <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="less.js-master/" ></script>
