@@ -690,6 +690,11 @@ class MMController {
                 $isSampled = FALSE;
             }
 
+            //check if pageviews = 0
+            if (!isset($result["stats"]["pageviews"])){
+                // echo $result["title"];
+                $result["stats"]["pageviews"] = 0;
+            }
             $songs_info[$result["producer_artists"][0]['name']] = [$result["release_date"],$isSampled, $result["stats"]["pageviews"]];
         }
 
