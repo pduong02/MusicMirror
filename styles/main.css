@@ -45,9 +45,9 @@ body {
     padding: 5px;
 }
 
-.track:hover {
+/* .track:hover {
     background-color: rgb(238, 238, 238);
-}
+} */
 
 /* Formatting for the offcanvas search for a song form */
 .form-group {

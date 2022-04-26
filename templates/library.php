@@ -111,6 +111,24 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        
+        <script>
+            $('.track').mouseover(function() {
+                $(this).css("background-color", "rgb(238, 238, 238)");
+            });
+            $('.track').mouseout(function() {
+                $(this).css("background-color", "lightgray");
+            });
+
+            $('.row img').click(function() {
+                if ($(this).css("height") == "60px") {
+                    $(this).css("height", "180px");
+                    $(this).css("width", "180px");
+                } else {
+                    $(this).css("height", "60px");
+                    $(this).css("width", "60px");
+                }
+                
+            })
+        </script>
     </body>
 </html>
