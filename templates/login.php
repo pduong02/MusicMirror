@@ -41,7 +41,7 @@
                         <div style = "color: orange" id="pwhelp" class="form-text"></div>
                     </div>
                     <div class="text-center">                
-                    <button type="submit" id = "submit" class="btn btn-primary">Login</button>
+                    <button type="submit" id = "loginsubmit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
                 </div>

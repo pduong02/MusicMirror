@@ -695,7 +695,12 @@ class MMController {
                 // echo $result["title"];
                 $result["stats"]["pageviews"] = 0;
             }
-            $songs_info[$result["producer_artists"][0]['name']] = [$result["release_date"],$isSampled, $result["stats"]["pageviews"]];
+
+            if ( isset($result["producer_artists"][0],$result["producer_artists"][0]['name'])){
+                $songs_info[$result["producer_artists"][0]['name']] = [$result["release_date"],$isSampled, $result["stats"]["pageviews"]];
+
+            }
+
         }
 
         // echo print_r($songs_info);

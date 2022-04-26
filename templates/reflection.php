@@ -59,11 +59,12 @@
       <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> One thing's clear: you've got <strong style = "height:25% "><?=$top_artist?></strong> on your mind with <strong><?=$top_count?></strong> songs from them in your library.</h5>
       <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> Let's show some love to the engineers. You've got <strong><?=$producer?>'s</strong> productions in your rotation!</h5>
       <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> <?=$age_msg?></h5>
-      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> -> With <?=$samplePercent?>% of your songs being sampled, we'd say your music taste is <?=$smplmsg?> to the producers out there.</h5>
+      <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px; padding-bottom: 20px"> -> With <?=$samplePercent?>% of your songs being sampled, we'd say your music taste is <?=$smplmsg?> to the producers out there.</h5>
     </div>
 
     <!-- <h5 style = "font-size: 1.5vw; padding-left: 10px; padding-top: 20px"> Let's give some love to the engineers. You've got <strong><?=$producer?>'s productions in your rotation. That's some great taste right there.</strong>.</h5> -->
 
+    <button class = "container btn btn-info" style = "width: fit-content" onclick="hideGraphs()">Show Graphs</button>
 
 </div>
 
@@ -73,7 +74,7 @@
 
 
 <!-- beginning of the graphs  -->
-<section class = "container-fluid col-12 row-cols-3" style = "padding-top: 50px">
+<section id = "graphs" class = "container-fluid col-12 row-cols-3" style = "padding-top: 50px">
 <!-- chart canvas instantiation (from Chart.js) -->
     <div class = "chart-container col-4">
         <canvas id="donut" aria-label="Donut graph of genres" role="img"></canvas>
@@ -293,6 +294,8 @@ const radar_config = {
 <footer class = "primary-footer row">
   <small class = "copyright">&#169; Patrick Duong and Max Kouzel.</small>
 </footer>
+<script src = "reflect.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="less.js-master/" ></script>
 
