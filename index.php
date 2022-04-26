@@ -6,7 +6,7 @@ spl_autoload_register(function($classname) {
     include "classes/$classname.php";
 });
 
-session_start();
+session_start(); 
 
 $action = "login";
 if (isset($_GET["action"]))
