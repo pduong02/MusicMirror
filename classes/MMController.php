@@ -26,9 +26,11 @@ class MMController {
             case "newuser":
                 $this->initializeLibrary();
                 break;
+            case "getRecommendations":
+                $this->returnRecommendations();
+                break;
             case "logout":
                 $this->destroySession();
-
             case "login":
                 // check email with regex
                 // store user name/email in cookie
@@ -140,7 +142,7 @@ class MMController {
                 $error_msg = "Failed to fetch user's library from user table";
             }
 
-            if (count($library) >= 10) {
+            if (count($library) >= 5) {
                 unset($_SESSION['fromNewUser']);
                 header("Location: ?action=home");
             }
@@ -164,11 +166,11 @@ class MMController {
 
     public function showLibrary() {
         $user = [
-            "name" => $_SESSION["name"],
-            "email" => $_SESSION["email"],
+            "name" => $_COOKIE["name"],
+            "email" => $_COOKIE["email"],
             "id" => $_SESSION["userid"]
         ];
-        // echo $_SESSION['fromNewUser'];
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hits = $this->searchGenius($_POST["form-songtitle"], $_POST["form-artist"]);
             
@@ -250,7 +252,7 @@ class MMController {
 
     public function home() {
         $user = [
-            "name" => $_SESSION["name"],
+            "name" => $_COOKIE["name"],
             "email" => $_SESSION["email"],
             "id" => $_SESSION['userid'],
             "last_refresh" => $_SESSION['last_refresh']
@@ -284,39 +286,80 @@ class MMController {
 
             header("Location: ?action=home", true, 303);
         } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $now = strtotime(date('Y-m-d'));
-            $last = strtotime($user['last_refresh']);
+            // Now handled in async AJAX request
 
-            // been at least a day since last refreshed the recommendations
-            if (abs($now - $last)/(60*60*24) >= 1) {
-                // should be an array with 3 elements, containing title, artist, image, and genres
-                $recommendations = $this->getRecommendations($user);
-                if (gettype($recommendations) != 'array') {
-                    $error_msg = $recommendations;
-                } else {
-                    $_SESSION["last_refresh"] = date('Y-m-d');
-                    $insert = $this->db->query("update users set last_recs = ?, last_refresh = ? where userid = ?", "ssi", 
-                                                json_encode($recommendations), date('Y-m-d'), $user['id']);
-                    if ($insert === false) {
-                        $error_msg = "Failed to update recommendations in user table";
-                    }
-                }
-            } else {
-                $recsjson = $this->db->query("select last_recs from users where userid = ?", "i", $user['id']);
+            // $now = strtotime(date('Y-m-d'));
+            // $last = strtotime($user['last_refresh']);
 
-                if ($recsjson === false) {
-                    $error_msg = "Failed to extract previous recommendations from user table.";
-                }
+            // // been at least a day since last refreshed the recommendations
+            // if (abs($now - $last)/(60*60*24) >= 1) {
+            //     // should be an array with 3 elements, containing title, artist, image, and genres
+            //     $recommendations = $this->getRecommendations($user);
+            //     if (gettype($recommendations) != 'array') {
+            //         $error_msg = $recommendations;
+            //     } else {
+            //         $_SESSION["last_refresh"] = date('Y-m-d');
+            //         $insert = $this->db->query("update users set last_recs = ?, last_refresh = ? where userid = ?", "ssi", 
+            //                                     json_encode($recommendations), date('Y-m-d'), $user['id']);
+            //         if ($insert === false) {
+            //             $error_msg = "Failed to update recommendations in user table";
+            //         }
+            //     }
+            // } else {
+            //     $recsjson = $this->db->query("select last_recs from users where userid = ?", "i", $user['id']);
 
-                $recommendations = json_decode($recsjson[0]['last_recs'], true);
-            }
+            //     if ($recsjson === false) {
+            //         $error_msg = "Failed to extract previous recommendations from user table.";
+            //     }
+
+            //     $recommendations = json_decode($recsjson[0]['last_recs'], true);
+            // }
         }
 
         include("templates/home.php");
     }
 
+    public function returnRecommendations() {
+        $user = [
+            "name" => $_COOKIE["name"],
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION['userid'],
+            "last_refresh" => $_SESSION['last_refresh']
+        ];
+
+        $now = strtotime(date('Y-m-d'));
+        $last = strtotime($user['last_refresh']);
+
+        // been at least a day since last refreshed the recommendations
+        if (abs($now - $last)/(60*60*24) >= 1) {
+            // should be an array with 3 elements, containing title, artist, image, and genres
+            $recommendations = $this->getRecommendations($user);
+            if (gettype($recommendations) != 'array') {
+                $error_msg = $recommendations;
+            } else {
+                $_SESSION["last_refresh"] = date('Y-m-d');
+                $insert = $this->db->query("update users set last_recs = ?, last_refresh = ? where userid = ?", "ssi", 
+                                            json_encode($recommendations), date('Y-m-d'), $user['id']);
+                if ($insert === false) {
+                    $error_msg = "Failed to update recommendations in user table";
+                }
+            }
+        } else {
+            $recsjson = $this->db->query("select last_recs from users where userid = ?", "i", $user['id']);
+
+            if ($recsjson === false) {
+                $error_msg = "Failed to extract previous recommendations from user table.";
+            }
+
+            $recommendations = json_decode($recsjson[0]['last_recs'], true);
+        }
+
+        echo json_encode($recommendations);
+    }
+
     private function getRecommendations($user) {
         // generate recommendations based on producer, genres, etc.
+        // should be an array with 3 elements, containing title, artist, image, and genres
         // get user library
         $songs = $this->db->query("select * from songs where userid = ?", "i", $user['id']);
         $producers = array();
@@ -744,6 +787,6 @@ class MMController {
 
     
         include('templates/reflection.php');
-       }
-
+    }
+  
 }

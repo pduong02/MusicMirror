@@ -34,7 +34,7 @@
         <div class="jumbotron row">
             <div class="container col-8">
               <h1 class="gradient-text display-3" style="line-height: 1.3">Welcome to MusicMirror</h1>
-              <p>Let's get your library set up, <?=$user['name']?>. Please add 10 songs to get started.</p>
+              <p>Let's get your library set up, <?=$user['name']?>. Please add 5 songs to get started.</p>
             </div>
         </div>
         <br>

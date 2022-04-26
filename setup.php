@@ -1,6 +1,6 @@
 <?php
 spl_autoload_register(function($classname) {
-    include "classes/$classname.php";
+    include("classes/$classname.php");
 });
 
 $db = new Database();

@@ -3,7 +3,7 @@
  <!DOCTYPE html>
  <html lang="en">
      <head> <title>MusicMirror</title>
-     <link rel="stylesheet" href="./styles/home_styles.css">
+      <link rel="stylesheet" href="./styles/home_styles.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
       <!-- <link rel="stylesheet" href="bootstrap.css"> -->
@@ -11,14 +11,14 @@
       <link rel="stylesheet" href="./styles/reflection_styles.css">
 
       <link rel="stylesheet/less" type="text/css" href="./styles.less" />
-         <meta charset="utf-8">
-         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <meta name="viewport" content="width=device-width, initial-scale=1"> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-         <meta name="author" content="Patrick Duong and Max Kouzel">
-         <meta name="description" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror.">
-         <meta name="keywords" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror, which is an active music library that generates curated production-based recommendations for users. ">     
-
+      <meta name="author" content="Patrick Duong and Max Kouzel">
+      <meta name="description" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror.">
+      <meta name="keywords" content="Patrick Duong and Max Kouzel's CS 4640 semester project: MoodMirror, which is an active music library that generates curated production-based recommendations for users. ">     
+      
     </head>
 
      <body>
@@ -158,7 +158,8 @@
     const donut = new Chart(
     document.getElementById('donut'),
     donut_config
-  );</script>
+  );
+  </script>
 
 
 
